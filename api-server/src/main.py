@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+import uvicorn
 
 app = FastAPI()
 
@@ -30,3 +31,6 @@ def getJob(id):
             return job
     raise HTTPException(
         status_code=404, detail="Job with id " + id + " not found")
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=80)
