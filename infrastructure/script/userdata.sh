@@ -1,6 +1,8 @@
 #!/bin/bash
-yum -y install httpd
-systemctl enable httpd
-systemctl start httpd
-curl "https://raw.githubusercontent.com/fabianschmauder/cgn-aws-22-3-friday-challanges/main/22-09-30_S3-CLI-Actions/index.html" > /var/www/html/index.html
-Footer
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+cd /home/ec2-user
+aws s3 cp s3://job-notifier-src-bucket-2134/api-server.zip api-server.zip 
+unzip api-server.zip
+pip3 install -r requirements.txt
+cd src
+python3 main.py

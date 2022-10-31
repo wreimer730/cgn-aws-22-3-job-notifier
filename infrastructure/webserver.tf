@@ -10,6 +10,14 @@ resource "aws_security_group" "allow_http" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
+  ingress {
+    description = "Http"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port        = 0
@@ -32,9 +40,10 @@ resource "aws_instance" "webserver" {
   vpc_security_group_ids      = [aws_security_group.allow_http.id]
   key_name                    = "vockey"
   user_data                   = file("script/userdata.sh")
+  iam_instance_profile        = "LabInstanceProfile"
 }
 
 output "webserver_ip" {
-  value =  aws_instance.webserver.public_ip
+  value       = aws_instance.webserver.public_ip
   description = "Public ip address"
 }
