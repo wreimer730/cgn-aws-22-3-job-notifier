@@ -50,12 +50,6 @@ resource "aws_lb_target_group" "webserver_target" {
   vpc_id   = aws_vpc.myvpc.id
 }
 
-resource "aws_lb_target_group_attachment" "webserver" {
-  target_group_arn = aws_lb_target_group.webserver_target.arn
-  target_id        = aws_instance.webserver.id
-  port             = 80
-}
-
 output "load_balancer_dns" {
   value       = aws_lb.job_lb.dns_name
   description = "Dns name of lb"

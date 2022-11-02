@@ -23,17 +23,3 @@ resource "aws_security_group" "allow_http" {
     Name = "allow_http"
   }
 }
-
-resource "aws_instance" "webserver" {
-  ami                         = "ami-08e2d37b6a0129927"
-  instance_type               = "t3.micro"
-  subnet_id                   = aws_subnet.private_subnet_b.id
-  associate_public_ip_address = false
-  vpc_security_group_ids      = [aws_security_group.allow_http.id]
-  key_name                    = "vockey"
-  user_data                   = file("script/userdata.sh")
-  iam_instance_profile        = "LabInstanceProfile"
-  depends_on = [
-    aws_nat_gateway.nat
-  ]
-}
