@@ -1,3 +1,6 @@
+# without sandbox please move creation of the bucket to terraform
+sh setup_src_bucket.sh
+
 mkdir build
 
 echo "zip files for server"
